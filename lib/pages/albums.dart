@@ -8,14 +8,7 @@ class AlbumsPage extends StatelessWidget {
     return Center(
       child: Scaffold(
         appBar: AppBar(title: const Text('Ed Sheeran Albums')),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text('hi')
-            ],
-          )
-          ),
+        
         ),
     );
   }
