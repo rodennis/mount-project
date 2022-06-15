@@ -5,9 +5,9 @@ void main() {
   group('ed sheeran albums', () {});
 
   test('albums response', () async {
-    final data = AlbumsData.instance;
+    final data = AlbumsData();
     final result = await data.fetchData;
 
-    expect(result.length > 0, true);
+    expect(!result.isEmpty, true);
   });
 }

@@ -5,9 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
 class AlbumsData with ChangeNotifier {
-  static final AlbumsData instance = AlbumsData._();
-  AlbumsData._();
-
   Map<String, dynamic> _map = {};
   bool _error = false;
   String _errorMessage = '';
@@ -24,7 +21,6 @@ class AlbumsData with ChangeNotifier {
       try {
         _error = false;
         _map = jsonDecode(response.body);
-        return _map;
       } catch (e) {
         _error = true;
         _errorMessage = e.toString();
@@ -36,6 +32,7 @@ class AlbumsData with ChangeNotifier {
       // test status codes here//
     }
     notifyListeners();
+    return _map;
   }
 
   void initialValues() {

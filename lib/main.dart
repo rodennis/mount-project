@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       home: ChangeNotifierProvider(
-        create: (context) => AlbumsData.instance,
+        create: (context) => AlbumsData(),
         builder: (context, child) {
           return const AlbumsPage();
         },
