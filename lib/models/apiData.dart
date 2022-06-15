@@ -5,6 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
 class AlbumsData with ChangeNotifier {
+  static final AlbumsData instance = AlbumsData._();
+  AlbumsData._();
+
   Map<String, dynamic> _map = {};
   bool _error = false;
   String _errorMessage = '';
@@ -13,13 +16,15 @@ class AlbumsData with ChangeNotifier {
   bool get error => _error;
   String get errorMessage => _errorMessage;
 
-  Future<void> get fetchData async {
-    final response = await get(Uri.parse('https://itunes.apple.com/lookup?id=183313439&entity=album'));
+  Future<dynamic> get fetchData async {
+    final response = await get(
+        Uri.parse('https://itunes.apple.com/lookup?id=183313439&entity=album'));
 
     if (response.statusCode == 200) {
       try {
-        _map = jsonDecode(response.body);
         _error = false;
+        _map = jsonDecode(response.body);
+        return _map;
       } catch (e) {
         _error = true;
         _errorMessage = e.toString();

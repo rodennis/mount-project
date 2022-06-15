@@ -12,8 +12,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const MaterialApp(
-      home: AlbumsPage(),
+    return  MaterialApp(
+      home: ChangeNotifierProvider(
+        create: (context) => AlbumsData.instance,
+        builder: (context, child) {
+          return const AlbumsPage();
+        },
+      ),
     );
   }
 }
