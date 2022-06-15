@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/albums.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,10 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: const [Text('hello world')],
-      ),
+    return const MaterialApp(
+      home:  AlbumsPage(),
     );
   }
+  
 }
