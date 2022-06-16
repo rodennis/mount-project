@@ -27,7 +27,7 @@ class AlbumsPage extends StatelessWidget {
                   ? const CircularProgressIndicator()
                   : value.error
                       ? Text(
-                          'something went wrong: ${value.errorMessage}',
+                          'Sorry something went wrong: ${value.errorMessage}',
                           textAlign: TextAlign.center,
                         )
                       : ListView.builder(
@@ -64,7 +64,6 @@ class Album extends StatelessWidget {
                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // if (map['wrapperType'] == 'collection') ...[
                     Text(
                       map['collectionName'],
                       textAlign: TextAlign.center,
@@ -89,7 +88,6 @@ class Album extends StatelessWidget {
                         }
                       },
                     ),
-                  // ]
                 ],
           )
         ),

@@ -18,4 +18,10 @@ void main() {
     expect(result, 1);
   });
 
+  test('counter should decrease by 1', () {
+    final data = AlbumsData();
+    final result = data.decrementFavorites();
+
+    expect(result, -1);
+  });
 }
