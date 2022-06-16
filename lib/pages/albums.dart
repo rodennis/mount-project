@@ -8,41 +8,40 @@ class AlbumsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<AlbumsData>().fetchData;
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Ed Sheeran Albums'),
-        leadingWidth: 100,
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text('Favorites = 0'),
+    return Consumer<AlbumsData>(builder: (context, value, child) {
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Ed Sheeran Albums'),
+          leadingWidth: 100,
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Favorites = ${value.counter}'),
+          ),
         ),
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {},
-        child: Center(
-          child: Consumer<AlbumsData>(builder: (context, value, child) {
-            return value.map.isEmpty && !value.error
-                ? const CircularProgressIndicator()
-                : value.error
-                    ? Text(
-                        'something went wrong: ${value.errorMessage}',
-                        textAlign: TextAlign.center,
-                      )
-                    : ListView.builder(
-                        itemCount: (value.map['results'].length - 1),
-                        itemBuilder: (context, index) {
-                          if (value.map['results'][index]['wrapperType'] ==
-                              'collection') {
-                            return Album(map: value.map['results'][index]);
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        });
-          }),
+        body: RefreshIndicator(
+          onRefresh: () async {},
+          child: Center(
+              child: value.map.isEmpty && !value.error
+                  ? const CircularProgressIndicator()
+                  : value.error
+                      ? Text(
+                          'something went wrong: ${value.errorMessage}',
+                          textAlign: TextAlign.center,
+                        )
+                      : ListView.builder(
+                          itemCount: (value.map['results'].length - 1),
+                          itemBuilder: (context, index) {
+                            if (value.map['results'][index]['wrapperType'] ==
+                                'collection') {
+                              return Album(map: value.map['results'][index]);
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          })),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -81,6 +80,7 @@ class Album extends StatelessWidget {
                     ElevatedButton(
                         onPressed: () {
                           value.incrementFavorites();
+                          context.read<AlbumsData>().counter;
                           print(value.counter);
                         },
                         // style: ElevatedButton.styleFrom(

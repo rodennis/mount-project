@@ -15,7 +15,7 @@ void main() {
     final data = AlbumsData();
     final result = data.incrementFavorites();
 
-    expect(data.counter == 1, true);
+    expect(result, 1);
   });
 
 }

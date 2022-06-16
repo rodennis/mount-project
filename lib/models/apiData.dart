@@ -46,6 +46,7 @@ class AlbumsData with ChangeNotifier {
 
   int incrementFavorites() {
     _counter = _counter + 1;
+    notifyListeners();
     return _counter;
   }
 
