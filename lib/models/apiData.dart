@@ -42,3 +42,9 @@ class AlbumsData with ChangeNotifier {
     notifyListeners();
   }
 }
+
+class FavoritesCounter with ChangeNotifier {
+  int counter = 0;
+
+  
+}
