@@ -1,3 +1,4 @@
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:mount_project/models/apiData.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,8 @@ class AlbumsPage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             if (value.map['results'][index]['wrapperType'] ==
                                 'collection') {
-                              return Album(map: value.map['results'][index]);
+                              return Album(
+                                  map: value.map['results'][index]);
                             } else {
                               return const SizedBox.shrink();
                             }
@@ -46,7 +48,8 @@ class AlbumsPage extends StatelessWidget {
 }
 
 class Album extends StatelessWidget {
-  const Album({Key? key, required this.map}) : super(key: key);
+  const Album({Key? key, required this.map})
+      : super(key: key);
   final Map<String, dynamic> map;
 
   @override
@@ -77,15 +80,16 @@ class Album extends StatelessWidget {
                       map['releaseDate'].substring(0, 10),
                       textAlign: TextAlign.center,
                     ),
-                    ElevatedButton(
-                        onPressed: () {
+                    FavoriteButton(
+                      isFavorite: false,
+                      valueChanged: (isFavourite) {
+                        if (isFavourite == false) {
+                          value.decrementFavorites();
+                        } else {
                           value.incrementFavorites();
-                          context.read<AlbumsData>().counter;
-                          print(value.counter);
-                        },
-                        // style: ElevatedButton.styleFrom(
-                        // primary: _flag ? Colors.red : Colors.teal,
-                        child: const Text('Add to Favorites'))
+                        }
+                      },
+                    ),
                   ]
                 ],
               );

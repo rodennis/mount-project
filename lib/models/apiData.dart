@@ -8,10 +8,12 @@ class AlbumsData with ChangeNotifier {
   Map<String, dynamic> _map = {};
   bool _error = false;
   String _errorMessage = '';
+  int _counter = 0;
 
   Map<String, dynamic> get map => _map;
   bool get error => _error;
   String get errorMessage => _errorMessage;
+  int get counter => _counter;
 
   Future<dynamic> get fetchData async {
     final response = await get(
@@ -42,15 +44,17 @@ class AlbumsData with ChangeNotifier {
     notifyListeners();
   }
 
-  int _counter = 0;
-
   int incrementFavorites() {
     _counter = _counter + 1;
     notifyListeners();
     return _counter;
   }
 
-  int get counter => _counter;
+  int decrementFavorites() {
+    _counter = _counter - 1;
+    notifyListeners();
+    return _counter;
+  }
 }
 
 // class FavoritesCounter with ChangeNotifier {
