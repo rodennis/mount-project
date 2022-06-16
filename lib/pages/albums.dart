@@ -33,13 +33,15 @@ class AlbumsPage extends StatelessWidget {
                       : ListView.builder(
                           itemCount: (value.map['results'].length),
                           itemBuilder: (context, index) {
-                            if (value.map['results'][index]['wrapperType'] ==
-                                'collection') {
-                              return Album(map: value.map['results'][index]);
+                            if (value.map['results'][index]['wrapperType'] == 
+                            'collection') {
+                              return Album(map: value.map['results'][index], value: value);
                             } else {
                               return const SizedBox.shrink();
                             }
-                          })),
+                          }
+                        )
+          ),
         ),
       );
     });
@@ -47,8 +49,9 @@ class AlbumsPage extends StatelessWidget {
 }
 
 class Album extends StatelessWidget {
-  const Album({Key? key, required this.map}) : super(key: key);
+  const Album({Key? key, required this.map, this.value}) : super(key: key);
   final Map<String, dynamic> map;
+  final dynamic value;
 
   @override
   Widget build(BuildContext context) {
@@ -58,19 +61,17 @@ class Album extends StatelessWidget {
         elevation: 10,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Consumer<AlbumsData>(
-            builder: (context, value, child) {
-              return Column(
+               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (map['wrapperType'] == 'collection') ...[
+                  // if (map['wrapperType'] == 'collection') ...[
                     Text(
                       map['collectionName'],
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontSize: 20),
                     ),
                     Image.network(map['artworkUrl100'], fit: BoxFit.fill),
-                    Text(
+                    Text( 
                       '\$${map['collectionPrice'].toString()}',
                       textAlign: TextAlign.center,
                     ),
@@ -88,11 +89,9 @@ class Album extends StatelessWidget {
                         }
                       },
                     ),
-                  ]
+                  // ]
                 ],
-              );
-            },
-          ),
+          )
         ),
       ),
     );
