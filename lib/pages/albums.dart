@@ -15,13 +15,13 @@ class AlbumsPage extends StatelessWidget {
           centerTitle: true,
           title: const Text('Ed Sheeran Albums'),
           leadingWidth: 100,
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('Favorites = ${value.counter}'),
-          ),
+          leading: Text('Favorites = ${value.counter}')
         ),
         body: RefreshIndicator(
-          onRefresh: () async {},
+          onRefresh: () async {
+            context.read<AlbumsData>().initialValues();
+            context.read<AlbumsData>().fetchData;
+          },
           child: Center(
               child: value.map.isEmpty && !value.error
                   ? const CircularProgressIndicator()
@@ -31,12 +31,11 @@ class AlbumsPage extends StatelessWidget {
                           textAlign: TextAlign.center,
                         )
                       : ListView.builder(
-                          itemCount: (value.map['results'].length - 1),
+                          itemCount: (value.map['results'].length),
                           itemBuilder: (context, index) {
                             if (value.map['results'][index]['wrapperType'] ==
                                 'collection') {
-                              return Album(
-                                  map: value.map['results'][index]);
+                              return Album(map: value.map['results'][index]);
                             } else {
                               return const SizedBox.shrink();
                             }
@@ -48,8 +47,7 @@ class AlbumsPage extends StatelessWidget {
 }
 
 class Album extends StatelessWidget {
-  const Album({Key? key, required this.map})
-      : super(key: key);
+  const Album({Key? key, required this.map}) : super(key: key);
   final Map<String, dynamic> map;
 
   @override

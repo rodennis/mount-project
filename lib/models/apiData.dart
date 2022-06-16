@@ -28,10 +28,16 @@ class AlbumsData with ChangeNotifier {
         _errorMessage = e.toString();
         _map = {};
       }
-    } else {
+    } else if (response.statusCode == 404) {
       _error = true;
       _map = {};
-      // test status codes here//
+      _errorMessage =
+          'It looks like the page you are looking for doesnt exist.';
+    } else if (response.statusCode == 500) {
+      _error = true;
+      _map = {};
+      _errorMessage =
+          'Sorry but it looks like the server encounterd an unexpected error. Please try reloading the page in a few minuts.';
     }
     notifyListeners();
     return _map;
@@ -41,6 +47,7 @@ class AlbumsData with ChangeNotifier {
     _map = {};
     _error = false;
     _errorMessage = '';
+    _counter = 0;
     notifyListeners();
   }
 
