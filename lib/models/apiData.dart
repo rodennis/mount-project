@@ -41,10 +41,16 @@ class AlbumsData with ChangeNotifier {
     _errorMessage = '';
     notifyListeners();
   }
+
+  int _counter = 0;
+
+  int incrementFavorites() {
+    _counter = _counter + 1;
+    return _counter;
+  }
+
+  int get counter => _counter;
 }
 
-class FavoritesCounter with ChangeNotifier {
-  int counter = 0;
-
-  
-}
+// class FavoritesCounter with ChangeNotifier {
+// }

@@ -12,7 +12,11 @@ class AlbumsPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Ed Sheeran Albums'),
-        leading: const Text('Favorites = 0'),
+        leadingWidth: 100,
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text('Favorites = 0'),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {},
@@ -28,7 +32,8 @@ class AlbumsPage extends StatelessWidget {
                     : ListView.builder(
                         itemCount: (value.map['results'].length - 1),
                         itemBuilder: (context, index) {
-                          if (value.map['results'][index]['wrapperType'] == 'collection') {
+                          if (value.map['results'][index]['wrapperType'] ==
+                              'collection') {
                             return Album(map: value.map['results'][index]);
                           } else {
                             return const SizedBox.shrink();
@@ -53,26 +58,38 @@ class Album extends StatelessWidget {
         elevation: 10,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (map['wrapperType'] == 'collection') ...[
-                Text(
-                  map['collectionName'],
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 20),
-                ),
-                Image.network(map['artworkUrl100'], fit: BoxFit.fill),
-                Text(
-                  '\$${map['collectionPrice'].toString()}',
-                  textAlign: TextAlign.center,
-                ),
-                Text(
-                  map['releaseDate'].substring(0, 10),
-                  textAlign: TextAlign.center,
-                )
-              ]
-            ],
+          child: Consumer<AlbumsData>(
+            builder: (context, value, child) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (map['wrapperType'] == 'collection') ...[
+                    Text(
+                      map['collectionName'],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    Image.network(map['artworkUrl100'], fit: BoxFit.fill),
+                    Text(
+                      '\$${map['collectionPrice'].toString()}',
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      map['releaseDate'].substring(0, 10),
+                      textAlign: TextAlign.center,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          value.incrementFavorites();
+                          print(value.counter);
+                        },
+                        // style: ElevatedButton.styleFrom(
+                        // primary: _flag ? Colors.red : Colors.teal,
+                        child: const Text('Add to Favorites'))
+                  ]
+                ],
+              );
+            },
           ),
         ),
       ),
