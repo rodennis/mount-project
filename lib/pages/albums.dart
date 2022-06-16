@@ -13,7 +13,7 @@ class AlbumsPage extends StatelessWidget {
         centerTitle: true,
         title: const Text('Ed Sheeran Albums'),
         leading: const Text('Favorites = 0'),
-        ),
+      ),
       body: RefreshIndicator(
         onRefresh: () async {},
         child: Center(
@@ -26,9 +26,13 @@ class AlbumsPage extends StatelessWidget {
                         textAlign: TextAlign.center,
                       )
                     : ListView.builder(
-                        itemCount: value.map['results'].length - 1,
+                        itemCount: (value.map['results'].length - 1),
                         itemBuilder: (context, index) {
-                          return Album(map: value.map['results'][index]);
+                          if (value.map['results'][index]['wrapperType'] == 'collection') {
+                            return Album(map: value.map['results'][index]);
+                          } else {
+                            return const SizedBox.shrink();
+                          }
                         });
           }),
         ),
@@ -52,14 +56,21 @@ class Album extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if(map['wrapperType'] == 'collection')... [
-                Text(map['collectionName'], 
-                textAlign: TextAlign.center, 
-                style: const TextStyle(fontSize: 20),
+              if (map['wrapperType'] == 'collection') ...[
+                Text(
+                  map['collectionName'],
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 20),
                 ),
                 Image.network(map['artworkUrl100'], fit: BoxFit.fill),
-                Text('\$${map['collectionPrice'].toString()}', textAlign: TextAlign.center,),
-                Text(map['releaseDate'].substring(0, 10), textAlign: TextAlign.center,)
+                Text(
+                  '\$${map['collectionPrice'].toString()}',
+                  textAlign: TextAlign.center,
+                ),
+                Text(
+                  map['releaseDate'].substring(0, 10),
+                  textAlign: TextAlign.center,
+                )
               ]
             ],
           ),
